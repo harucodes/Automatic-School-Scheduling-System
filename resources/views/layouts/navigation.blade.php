@@ -18,44 +18,45 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     @if ($user->role === 'admin')
                     <x-nav-link :href="route('admin.home')" :active="request()->routeIs('admin.home')">
-                        Dashboard
+                        <i class="fas fa-tachometer-alt me-1"></i> Dashboard
                     </x-nav-link>
                     <x-nav-link href="{{ url('/users/admin/subjects') }}" :active="request()->is('users/admin/subjects')">
-                        Subjects
+                        <i class="fas fa-book me-1"></i> Subjects
                     </x-nav-link>
                     <x-nav-link href="{{ url('/users/admin/sections') }}" :active="request()->is('users/admin/sections')">
-                        Sections
+                        <i class="fas fa-layer-group me-1"></i> Sections
                     </x-nav-link>
                     <x-nav-link href="{{ url('/users/admin/rooms') }}" :active="request()->is('users/admin/rooms')">
-                        Rooms
+                        <i class="fas fa-door-open me-1"></i> Rooms
                     </x-nav-link>
                     <x-nav-link href="{{ url('/users/admin/schedules') }}" :active="request()->is('users/admin/schedules')">
-                        schedules
+                        <i class="fas fa-calendar-alt me-1"></i> Schedules
                     </x-nav-link>
                     <x-nav-link href="{{ url('/users/admin/students') }}" :active="request()->is('users/admin/students')">
-                        Students
+                        <i class="fas fa-user-graduate me-1"></i> Students
                     </x-nav-link>
                     <x-nav-link href="{{ url('/users/admin/teachers') }}" :active="request()->is('users/admin/teachers')">
-                        Teachers
+                        <i class="fas fa-chalkboard-teacher me-1"></i> Teachers
                     </x-nav-link>
 
                     @elseif ($user->role === 'student')
                     <x-nav-link :href="route('students.home')" :active="request()->routeIs('students.home')">
-                        Dashboard
+                        <i class="fas fa-tachometer-alt me-1"></i> Dashboard
                     </x-nav-link>
                     <x-nav-link href="{{ url('/users/students/schedules') }}" :active="request()->is('users/students/schedules')">
-                        My schedules
+                        <i class="fas fa-calendar-alt me-1"></i> My Schedules
                     </x-nav-link>
 
                     @elseif ($user->role === 'teacher')
                     <x-nav-link :href="route('teachers.home')" :active="request()->routeIs('teachers.home')">
-                        Dashboard
+                        <i class="fas fa-tachometer-alt me-1"></i> Dashboard
                     </x-nav-link>
                     <x-nav-link href="{{ url('/users/teachers/schedules') }}" :active="request()->is('users/teachers/schedules')">
-                        schedules
+                        <i class="fas fa-calendar-check me-1"></i> Schedules
                     </x-nav-link>
                     @endif
                 </div>
+
 
 
 
