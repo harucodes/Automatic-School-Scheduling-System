@@ -4,6 +4,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\AdminSubjectController;
 use App\Http\Controllers\AdminSectionController;
+use App\Http\Controllers\AdminRoomController;
+use App\Http\Controllers\AdminTeacherController;
+use App\Http\Controllers\AdminScheduleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -44,12 +47,50 @@ Route::middleware('auth')->group(function () {
     Route::delete('/users/admin/sections/{section}', [AdminSectionController::class, 'destroy'])
         ->name('admin.sections.destroy')
         ->middleware('auth');
+    // Admin manage rooms
+    Route::get('/users/admin/rooms', [AdminRoomController::class, 'index'])
+        ->name('admin.rooms')
+        ->middleware('auth');
+    Route::post('/users/admin/rooms', [AdminRoomController::class, 'store'])
+        ->name('admin.rooms.store')
+        ->middleware('auth');
+    Route::put('/users/admin/rooms/{room}', [AdminRoomController::class, 'update'])
+        ->name('admin.rooms.update')
+        ->middleware('auth');
+    Route::delete('/users/admin/rooms/{room}', [AdminRoomController::class, 'destroy'])
+        ->name('admin.rooms.destroy')
+        ->middleware('auth');
 
+    //admin manage teachers
+    Route::get('/users/admin/teachers', [AdminTeacherController::class, 'index'])
+        ->name('admin.teachers')
+        ->middleware('auth');
+    Route::put('/users/admin/teachers/{teacher}', [AdminTeacherController::class, 'update'])
+        ->name('admin.teachers.update')
+        ->middleware('auth');
+    Route::delete('/users/admin/teachers/{teacher}', [AdminTeacherController::class, 'destroy'])
+        ->name('admin.teachers.destroy')
+        ->middleware('auth');
+    //admin manage teacher schedule
+    Route::get('/users/admin/schedules', [AdminScheduleController::class, 'index'])
+        ->name('admin.schedules')
+        ->middleware('auth');
+    Route::post('/users/admin/schedules', [AdminScheduleController::class, 'store'])
+        ->name('admin.schedules.store')
+        ->middleware('auth');
+    Route::put('/users/admin/schedules/{schedule}', [AdminScheduleController::class, 'update'])
+        ->name('admin.schedules.update')
+        ->middleware('auth');
+    Route::delete('/users/admin/schedules/{schedule}', [AdminScheduleController::class, 'destroy'])
+        ->name('admin.schedules.destroy')
+        ->middleware('auth');
 
-    Route::view('/users/admin/rooms', 'users.admin.rooms')->name('admin.rooms');
-    Route::view('/users/admin/schedules', 'users.admin.schedules')->name('admin.schedules');
+    //admin manage students schedule
+
     Route::view('/users/admin/students', 'users.admin.students')->name('admin.students');
-    Route::view('/users/admin/teachers', 'users.admin.teachers')->name('admin.teachers');
+
+
+
 
     // Student additional pages
     Route::view('/users/students/schedules', 'users.students.schedules')->name('students.schedules');

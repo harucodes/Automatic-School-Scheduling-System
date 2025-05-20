@@ -13,6 +13,6 @@ class Section extends Model
     ];
     public function creator()
     {
-        return $this->belongsTo(User::class, 'user_subject_id');
+        return $this->belongsTo(User::class, 'user_section_id');
     }
 }
