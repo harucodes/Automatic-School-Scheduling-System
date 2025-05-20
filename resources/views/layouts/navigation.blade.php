@@ -142,7 +142,7 @@
                 {{ __('Rooms') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ url('/users/admin/schedules') }}" :active="request()->is('users/admin/schedules')">
-                {{ __('schedules') }}
+                {{ __('schedules for teachers') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ url('/users/admin/students') }}" :active="request()->is('users/admin/students')">
                 {{ __('Students') }}

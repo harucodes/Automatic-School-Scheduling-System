@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\Section;
 use App\Models\Room;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class AdminScheduleController extends Controller
@@ -24,8 +23,6 @@ class AdminScheduleController extends Controller
         $sections = Section::all();
         $rooms = Room::all();
 
-        /*  Log::info('Admin accessed the schedule index page.');
- */
         return view('users.admin.schedules', compact(
             'schedules',
             'subjects',
@@ -47,8 +44,7 @@ class AdminScheduleController extends Controller
             'end_time' => 'required|date_format:H:i|after:start_time',
         ]);
 
-        Log::info('Attempting to store a new schedule.', $request->all());
-
+        // Check for schedule conflicts
         $conflict = Schedule::where('day', $request->day)
             ->where('room_id', $request->room_id)
             ->where(function ($query) use ($request) {
@@ -62,19 +58,10 @@ class AdminScheduleController extends Controller
             ->exists();
 
         if ($conflict) {
-            Log::warning('Schedule conflict detected during store.', [
-                'room_id' => $request->room_id,
-                'day' => $request->day,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
-            ]);
-
             return back()->withErrors(['time' => 'The selected time slot conflicts with an existing schedule for this room.']);
         }
 
         Schedule::create($request->all());
-
-        Log::info('Schedule created successfully.', $request->all());
 
         return redirect()->route('admin.schedules')
             ->with('success', 'Schedule created successfully.');
@@ -91,12 +78,9 @@ class AdminScheduleController extends Controller
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
         ]);
+        
 
-        Log::info('Attempting to update schedule.', [
-            'schedule_id' => $schedule->id,
-            'data' => $request->all()
-        ]);
-
+        // Check for schedule conflicts (excluding current schedule)
         $conflict = Schedule::where('day', $request->day)
             ->where('room_id', $request->room_id)
             ->where('id', '!=', $schedule->id)
@@ -111,23 +95,10 @@ class AdminScheduleController extends Controller
             ->exists();
 
         if ($conflict) {
-            Log::warning('Schedule conflict detected during update.', [
-                'schedule_id' => $schedule->id,
-                'room_id' => $request->room_id,
-                'day' => $request->day,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
-            ]);
-
             return back()->withErrors(['time' => 'The selected time slot conflicts with an existing schedule for this room.']);
         }
 
         $schedule->update($request->all());
-
-        Log::info('Schedule updated successfully.', [
-            'schedule_id' => $schedule->id,
-            'data' => $request->all()
-        ]);
 
         return redirect()->route('admin.schedules')
             ->with('success', 'Schedule updated successfully.');
@@ -135,16 +106,7 @@ class AdminScheduleController extends Controller
 
     public function destroy(Schedule $schedule)
     {
-        Log::info('Attempting to delete schedule.', [
-            'schedule_id' => $schedule->id,
-        ]);
-
         $schedule->delete();
-
-        Log::info('Schedule deleted successfully.', [
-            'schedule_id' => $schedule->id,
-        ]);
-
         return redirect()->route('admin.schedules')
             ->with('success', 'Schedule deleted successfully.');
     }

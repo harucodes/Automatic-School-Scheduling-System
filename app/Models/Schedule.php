@@ -38,4 +38,9 @@ class Schedule extends Model
     {
         return $this->belongsTo(Room::class);
     }
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'schedule_student', 'schedule_id', 'user_student_id')
+            ->withTimestamps();
+    }
 }

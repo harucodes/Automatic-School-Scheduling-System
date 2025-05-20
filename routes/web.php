@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminSectionController;
 use App\Http\Controllers\AdminRoomController;
 use App\Http\Controllers\AdminTeacherController;
 use App\Http\Controllers\AdminScheduleController;
+use App\Http\Controllers\AdminStudentScheduleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -86,6 +87,17 @@ Route::middleware('auth')->group(function () {
         ->middleware('auth');
 
     //admin manage students schedule
+    Route::get('/users/admin/student-schedules', [AdminStudentScheduleController::class, 'index'])
+        ->name('admin.student-schedules.index')
+        ->middleware('auth');
+    Route::post('/users/admin/student-schedules', [AdminStudentScheduleController::class, 'store'])
+        ->name('admin.student-schedules.store')
+        ->middleware('auth');
+    Route::delete('/users/admin/student-schedules/{assignment}', [AdminStudentScheduleController::class, 'destroy'])
+        ->name('admin.student-schedules.destroy')
+        ->middleware('auth');
+    Route::get('/api/student-schedules/{student}', [AdminStudentScheduleController::class, 'getStudentSchedules'])
+        ->middleware('auth');
 
     Route::view('/users/admin/students', 'users.admin.students')->name('admin.students');
 
