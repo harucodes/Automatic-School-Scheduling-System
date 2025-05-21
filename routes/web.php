@@ -7,7 +7,9 @@ use App\Http\Controllers\AdminSectionController;
 use App\Http\Controllers\AdminRoomController;
 use App\Http\Controllers\AdminTeacherController;
 use App\Http\Controllers\AdminScheduleController;
+use App\Http\Controllers\AdminStudentController;
 use App\Http\Controllers\AdminStudentScheduleController;
+use App\Http\Controllers\StudentScheduleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -101,12 +103,25 @@ Route::middleware('auth')->group(function () {
 
     Route::view('/users/admin/students', 'users.admin.students')->name('admin.students');
 
+    //admin manage students
+    Route::get('/users/admin/students', [AdminStudentController::class, 'index'])
+        ->name('admin.students')
+        ->middleware('auth');
+    Route::put('/users/admin/students/{student}', [AdminStudentController::class, 'update'])
+        ->name('admin.students.update')
+        ->middleware('auth');
+    Route::delete('/users/admin/students/{student}', [AdminStudentController::class, 'destroy'])
+        ->name('admin.students.destroy')
+        ->middleware('auth');
 
-
-
-    // Student additional pages
-    Route::view('/users/students/schedules', 'users.students.schedules')->name('students.schedules');
-
+    // Student view schedule
+    Route::get('/users/students/schedules', [StudentScheduleController::class, 'index'])
+        ->name('student.schedules')
+        ->middleware('auth');
+    Route::get('/users/students/schedules/export', [StudentScheduleController::class, 'export'])
+        ->name('student.schedule.export')
+        ->middleware('auth');
+        
     // Teacher additional pages
     Route::view('/users/teachers/schedules', 'users.teachers.schedules')->name('teachers.schedules');
 });
