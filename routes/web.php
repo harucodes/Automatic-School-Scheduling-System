@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminScheduleController;
 use App\Http\Controllers\AdminStudentController;
 use App\Http\Controllers\AdminStudentScheduleController;
 use App\Http\Controllers\StudentScheduleController;
+use App\Http\Controllers\TeacherScheduleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -121,9 +122,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/users/students/schedules/export', [StudentScheduleController::class, 'export'])
         ->name('student.schedule.export')
         ->middleware('auth');
-        
+
     // Teacher additional pages
-    Route::view('/users/teachers/schedules', 'users.teachers.schedules')->name('teachers.schedules');
+    // Teacher schedule routes
+    Route::get('/users/teachers/schedules', [TeacherScheduleController::class, 'index'])
+        ->name('teacher.schedules')
+        ->middleware('auth');
+
+    Route::get('/users/teachers/schedules/export', [TeacherScheduleController::class, 'export'])
+        ->name('teacher.schedule.export')
+        ->middleware('auth');
 });
 
 require __DIR__ . '/auth.php';

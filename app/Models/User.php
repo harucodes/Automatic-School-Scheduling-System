@@ -55,4 +55,8 @@ class User extends Authenticatable
             ->withPivot('id')
             ->withTimestamps();
     }
+    public function teacherSchedules()
+    {
+        return $this->hasMany(Schedule::class, 'user_teacher_id');
+    }
 }
