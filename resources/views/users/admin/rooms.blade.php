@@ -19,7 +19,7 @@
                     <!-- Create Room Button -->
                     <div class="flex justify-end mb-6">
                         <button onclick="openCreateModal()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-200">
-                            {{ __('Create New Room') }}
+                            <i class="fa-solid fa-plus mr-2"></i> {{ __('Create New Room') }}
                         </button>
                     </div>
 

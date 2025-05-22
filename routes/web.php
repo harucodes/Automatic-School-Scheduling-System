@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminStudentController;
 use App\Http\Controllers\AdminStudentScheduleController;
 use App\Http\Controllers\StudentScheduleController;
 use App\Http\Controllers\TeacherScheduleController;
+use App\Http\Controllers\AdminDashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    Route::view('/users/admin/home', 'users.admin.home')->name('admin.home');
+    Route::get('/users/admin/home', [AdminDashboardController::class, 'index'])->name('admin.home');
     Route::view('/users/teachers/home', 'users.teachers.home')->name('teachers.home');
     Route::view('/users/students/home', 'users.students.home')->name('students.home');
 
@@ -123,7 +124,6 @@ Route::middleware('auth')->group(function () {
         ->name('student.schedule.export')
         ->middleware('auth');
 
-    // Teacher additional pages
     // Teacher schedule routes
     Route::get('/users/teachers/schedules', [TeacherScheduleController::class, 'index'])
         ->name('teacher.schedules')

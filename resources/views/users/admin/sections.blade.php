@@ -19,7 +19,7 @@
                     <!-- Create Section Button -->
                     <div class="flex justify-end mb-6">
                         <button onclick="openCreateModal()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-200">
-                            {{ __('Create New Section') }}
+                            <i class="fa-solid fa-plus mr-2"></i>{{ __('Create New Section') }}
                         </button>
                     </div>
 
@@ -111,12 +111,11 @@
                             <select name="section_level" id="section_level" required
                                 class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-200">
                                 <option value="">{{ __('Select Grade Level') }}</option>
-                                <option value="Grade 7">Grade 7</option>
-                                <option value="Grade 8">Grade 8</option>
-                                <option value="Grade 9">Grade 9</option>
-                                <option value="Grade 10">Grade 10</option>
-                                <option value="Grade 11">Grade 11</option>
-                                <option value="Grade 12">Grade 12</option>
+                                <option value="1st Year">1st Year College</option>
+                                <option value="2nd Year">2nd Year College</option>
+                                <option value="3rd Year">3rd Year College</option>
+                                <option value="4th Year">4th Year College</option>
+                                <option value="5th Year">5th Year College</option>
                             </select>
                         </div>
 

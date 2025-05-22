@@ -6,7 +6,7 @@
             </h2>
             <a href="{{ url('/users/admin/student-schedules') }}"
                 class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
-                {{ __('Manage Student Schedules') }}
+                <i class="fa-solid fa-calendar-days mr-2"></i>{{ __('Manage Student Schedules') }}
             </a>
         </div>
     </x-slot>
@@ -37,7 +37,7 @@
                     <!-- Create Schedule Button -->
                     <div class="flex justify-end mb-6">
                         <button onclick="openCreateModal()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-200">
-                            {{ __('Create New Schedule') }}
+                        <i class="fa-solid fa-plus mr-2"></i> {{ __('Create New Schedule') }}
                         </button>
                     </div>
 
@@ -176,7 +176,7 @@
                                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-200">
                                     <option value="">{{ __('Select Room') }}</option>
                                     @foreach($rooms as $room)
-                                    <option value="{{ $room->id }}">{{ $room->room_number }} (Capacity: {{ $room->capacity }})</option>
+                                    <option value="{{ $room->id }}">{{ $room->room_number }}</option>
                                     @endforeach
                                 </select>
                             </div>

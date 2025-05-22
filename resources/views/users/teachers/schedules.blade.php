@@ -13,6 +13,7 @@
                         <h3 class="text-lg font-medium">Your Teaching Schedule</h3>
                         <a href="{{ route('teacher.schedule.export') }}"
                             class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
+                            <i class="fa-solid fa-file-excel" aria-hidden="true"></i>
                             Export to Excel
                         </a>
                     </div>

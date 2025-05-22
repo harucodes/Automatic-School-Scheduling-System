@@ -4,30 +4,164 @@
             {{ __('Manage Student Schedules') }}
         </h2>
     </x-slot>
-
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <!-- jQuery (required for Toastr) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <!-- Success Message -->
-                    @if(session('success'))
-                    <div class="mb-6 px-4 py-3 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded">
-                        {{ session('success') }}
+                    <div x-data="{
+        showSuccess: false,
+        showError: false,
+        successMessage: '',
+        errorMessage: '',
+        closeSuccess() {
+            this.showSuccess = false;
+        },
+        closeError() {
+            this.showError = false;
+        }
+    }"
+                        x-init="
+        @if(Session::has('success'))
+            showSuccess = true;
+            successMessage = '{{ Session::get('success') }}';
+            setTimeout(() => showSuccess = false, 5000);
+        @endif
+        @if(Session::has('error') || $errors->any())
+            showError = true;
+            errorMessage = '{{ Session::get('error', $errors->first()) }}';
+            setTimeout(() => showError = false, 5000);
+        @endif
+    ">
+                        <!-- Success Alert -->
+                        <div x-show="showSuccess"
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="opacity-0 translate-x-10"
+                            x-transition:enter-end="opacity-100 translate-x-0"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="opacity-100 translate-x-0"
+                            x-transition:leave-end="opacity-0 translate-x-10"
+                            class="fixed z-50 top-5 right-5 w-80">
+                            <div class="bg-green-50 border-l-4 border-green-500 rounded-lg shadow-lg overflow-hidden">
+                                <div class="p-4">
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0">
+                                            <svg class="h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3 w-0 flex-1 pt-0.5">
+                                            <p class="text-sm font-medium text-green-800" x-text="successMessage"></p>
+                                        </div>
+                                        <div class="ml-4 flex-shrink-0 flex">
+                                            <button @click="closeSuccess" class="inline-flex text-green-500 hover:text-green-700 focus:outline-none">
+                                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-green-100 px-4 py-2">
+                                    <div class="h-1 w-full bg-green-200 rounded-full overflow-hidden">
+                                        <div x-show="showSuccess"
+                                            x-transition:enter="transition ease-out duration-300"
+                                            x-transition:enter-start="w-0"
+                                            x-transition:enter-end="w-full"
+                                            class="h-full bg-green-500"
+                                            style="animation: progress 5s linear forwards;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Error Alert -->
+                        <div x-show="showError"
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="opacity-0 translate-x-10"
+                            x-transition:enter-end="opacity-100 translate-x-0"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="opacity-100 translate-x-0"
+                            x-transition:leave-end="opacity-0 translate-x-10"
+                            class="fixed z-50 top-5 right-5 w-80">
+                            <div class="bg-red-50 border-l-4 border-red-500 rounded-lg shadow-lg overflow-hidden">
+                                <div class="p-4">
+                                    <div class="flex items-start">
+                                        <div class="flex-shrink-0">
+                                            <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                        <div class="ml-3 w-0 flex-1 pt-0.5">
+                                            <p class="text-sm font-medium text-red-800" x-text="errorMessage"></p>
+                                        </div>
+                                        <div class="ml-4 flex-shrink-0 flex">
+                                            <button @click="closeError" class="inline-flex text-red-500 hover:text-red-700 focus:outline-none">
+                                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-red-100 px-4 py-2">
+                                    <div class="h-1 w-full bg-red-200 rounded-full overflow-hidden">
+                                        <div x-show="showError"
+                                            x-transition:enter="transition ease-out duration-300"
+                                            x-transition:enter-start="w-0"
+                                            x-transition:enter-end="w-full"
+                                            class="h-full bg-red-500"
+                                            style="animation: progress 5s linear forwards;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    @endif
+
+                    <style>
+                        @keyframes progress {
+                            0% {
+                                width: 100%;
+                            }
+
+                            100% {
+                                width: 0%;
+                            }
+                        }
+                    </style>
+                    <script>
+                        new TomSelect("#studentSelect", {
+                            create: false,
+                            sortField: {
+                                field: "text",
+                                direction: "asc"
+                            },
+                            placeholder: "Search or select a student..."
+                        });
+                    </script>
 
                     <!-- Student Selection -->
-                    <div class="mb-6">
-                        <label for="studentSelect" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            {{ __('Select Student') }} *
+                    <!-- Enhanced Select Field -->
+                    <div class="mb-6 w-full max-w-md">
+                        <label for="studentSelect" class="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                            {{ __('Select Student') }} <span class="text-red-500">*</span>
                         </label>
-                        <select id="studentSelect" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-200">
+                        <select id="studentSelect" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 transition ease-in-out duration-150">
                             <option value="">{{ __('Select a student') }}</option>
                             @foreach($students as $student)
                             <option value="{{ $student->id }}">{{ $student->name }} ({{ $student->id_number ?? 'N/A' }})</option>
                             @endforeach
                         </select>
                     </div>
+
+
+
 
                     <!-- Calendar Navigation -->
                     <div class="flex justify-between items-center mb-4">
@@ -43,7 +177,7 @@
                     <!-- Assign Schedule Button -->
                     <div class="flex justify-end mb-6">
                         <button onclick="openAssignModal()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-200">
-                            {{ __('Assign Schedule') }}
+                            <i class="fa-solid fa-calendar-plus mr-2"></i>{{ __('Assign Schedule') }}
                         </button>
                     </div>
 

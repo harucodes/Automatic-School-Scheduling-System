@@ -15,4 +15,9 @@ class Section extends Model
     {
         return $this->belongsTo(User::class, 'user_section_id');
     }
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+    
 }

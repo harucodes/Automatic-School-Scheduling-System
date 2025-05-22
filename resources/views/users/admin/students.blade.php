@@ -49,10 +49,10 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <button onclick="openEditModal({{ json_encode($student) }})" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-500 mr-3">
-                                            {{ __('Edit') }}
+                                            <i class="fa-solid fa-pen-to-square mr-1"></i> {{ __('Edit') }}
                                         </button>
                                         <button onclick="confirmDelete({{ $student->id }})" class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-500">
-                                            {{ __('Delete') }}
+                                            <i class="fa-solid fa-trash mr-1"></i> {{ __('Delete') }}
                                         </button>
                                     </td>
                                 </tr>
