@@ -1,67 +1,65 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-white leading-tight">
             {{ __('Manage Rooms') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-maroon-200">
+                <div class="p-6 text-maroon-900">
                     <!-- Success Message -->
                     @if(session('success'))
-                    <div class="mb-6 px-4 py-3 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded">
+                    <div class="mb-6 px-4 py-3 bg-mustard-100 text-maroon-800 rounded border border-mustard-200">
                         {{ session('success') }}
                     </div>
                     @endif
 
                     <!-- Create Room Button -->
                     <div class="flex justify-end mb-6">
-                        <button onclick="openCreateModal()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-200">
+                        <button onclick="openCreateModal()" class="px-4 py-2 bg-maroon-600 hover:bg-maroon-700 text-white rounded-lg transition duration-200">
                             <i class="fa-solid fa-plus mr-2"></i> {{ __('Create New Room') }}
                         </button>
                     </div>
 
                     <!-- Rooms Table -->
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead class="bg-gray-50 dark:bg-gray-700">
+                        <table class="min-w-full divide-y divide-maroon-200">
+                            <thead class="bg-maroon-50">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-maroon-800 uppercase tracking-wider">
                                         {{ __('Room Number') }}
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-maroon-800 uppercase tracking-wider">
                                         {{ __('Capacity') }}
                                     </th>
-
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-maroon-800 uppercase tracking-wider">
                                         {{ __('Actions') }}
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                            <tbody class="bg-white divide-y divide-maroon-200">
                                 @forelse($rooms as $room)
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-maroon-800">
                                         {{ $room->room_number }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-maroon-800">
                                         {{ $room->capacity }}
                                     </td>
-
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <button onclick="openEditModal({{ json_encode($room) }})" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-500 mr-3">
+                                        <button onclick="openEditModal({{ json_encode($room) }})" class="text-maroon-600 hover:text-maroon-900 mr-3">
                                             {{ __('Edit') }}
                                         </button>
-                                        <button onclick="confirmDelete({{ $room->id }})" class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-500">
+                                        <button onclick="confirmDelete({{ $room->id }})" class="text-mustard-600 hover:text-mustard-800">
                                             {{ __('Delete') }}
                                         </button>
                                     </td>
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
+                                    <td colspan="4" class="px-6 py-4 text-center text-sm text-maroon-600">
                                         {{ __('No rooms found.') }}
                                     </td>
                                 </tr>
@@ -82,44 +80,78 @@
     </div>
 
     <!-- Create/Edit Modal -->
-    <div id="roomModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75" onclick="closeModal()"></div>
-            </div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <h3 id="modalTitle" class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200 mb-4"></h3>
+    <!-- Create/Edit Room Modal -->
+    <div id="roomModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" aria-modal="true" role="dialog">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- Background overlay with blur effect -->
+            <div class="fixed inset-0 bg-gray-500/75 backdrop-blur-sm transition-opacity" aria-hidden="true" onclick="closeModal()"></div>
+
+            <!-- Modal container -->
+            <div class="inline-block align-bottom bg-white rounded-xl shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full overflow-hidden border border-maroon-200/30">
+                <!-- Modal header with gradient background -->
+                <div class="bg-gradient-to-r from-maroon-600 to-maroon-700 px-6 py-4">
+                    <div class="flex items-center justify-between">
+                        <h3 id="modalTitle" class="text-xl font-semibold text-white flex items-center">
+                            <i class="fas fa-door-open mr-2"></i>
+                            <span id="modalTitleText"></span>
+                        </h3>
+                        <button type="button" onclick="closeModal()" class="text-white hover:text-mustard-300 focus:outline-none transition">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modal body -->
+                <div class="px-6 py-5">
                     <form id="roomForm" method="POST">
                         @csrf
                         <input type="hidden" id="formMethod" name="_method" value="POST">
                         <input type="hidden" id="roomId" name="id" value="">
 
-                        <div class="mb-4">
-                            <label for="room_number" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                {{ __('Room Number') }} *
-                            </label>
-                            <input type="text" name="room_number" id="room_number" required
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-200">
+                        <div class="space-y-5">
+                            <!-- Room Number Field -->
+                            <div>
+                                <label for="room_number" class="block text-sm font-medium text-maroon-800 mb-1.5">
+                                    {{ __('Room Number') }} <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <input type="text" name="room_number" id="room_number" required
+                                        class="w-full px-4 py-2.5 text-maroon-800 bg-white border border-maroon-200 rounded-lg focus:ring-2 focus:ring-maroon-500 focus:border-maroon-500 placeholder-maroon-400 transition duration-200"
+                                        placeholder="e.g. RM-101">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <i class="fas fa-hashtag text-maroon-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Capacity Field -->
+                            <div>
+                                <label for="capacity" class="block text-sm font-medium text-maroon-800 mb-1.5">
+                                    {{ __('Capacity') }} <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <input type="number" name="capacity" id="capacity" min="1" required
+                                        class="w-full px-4 py-2.5 text-maroon-800 bg-white border border-maroon-200 rounded-lg focus:ring-2 focus:ring-maroon-500 focus:border-maroon-500 placeholder-maroon-400 transition duration-200 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                        placeholder="e.g. 30">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <i class="fas fa-users text-maroon-400"></i>
+                                    </div>
+                                </div>
+                                <p class="mt-1 text-xs text-maroon-600">Maximum number of students this room can accommodate</p>
+                            </div>
                         </div>
 
-                        <div class="mb-4">
-                            <label for="capacity" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                {{ __('Capacity') }} *
-                            </label>
-                            <input type="number" name="capacity" id="capacity" min="1" required
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-200">
-                        </div>
-
-                        <div class="flex justify-end space-x-3 mt-6">
+                        <!-- Modal footer -->
+                        <div class="mt-8 flex justify-end space-x-3">
                             <button type="button" onclick="closeModal()"
-                                class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                {{ __('Cancel') }}
+                                class="px-5 py-2.5 border border-maroon-200 rounded-lg text-sm font-medium text-maroon-800 hover:bg-maroon-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-maroon-500 transition duration-200">
+                                <i class="fas fa-times mr-2"></i> {{ __('Cancel') }}
                             </button>
                             <button type="submit"
-                                class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200">
-                                {{ __('Save') }}
+                                class="px-5 py-2.5 bg-gradient-to-r from-maroon-600 to-maroon-700 hover:from-maroon-700 hover:to-maroon-800 text-white rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-maroon-500 shadow-md transition duration-200 flex items-center">
+                                <i class="fas fa-save mr-2"></i> {{ __('Save') }}
                             </button>
                         </div>
                     </form>
@@ -132,23 +164,23 @@
     <div id="deleteModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75" onclick="closeDeleteModal()"></div>
+                <div class="absolute inset-0 bg-gray-500 opacity-75" onclick="closeDeleteModal()"></div>
             </div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-maroon-200">
                 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
-                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                            <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-mustard-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <svg class="h-6 w-6 text-mustard-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
                         </div>
                         <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200">
+                            <h3 class="text-lg leading-6 font-medium text-maroon-800">
                                 {{ __('Delete Room') }}
                             </h3>
                             <div class="mt-2">
-                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                <p class="text-sm text-maroon-600">
                                     {{ __('Are you sure you want to delete this room? This action cannot be undone.') }}
                                 </p>
                             </div>
@@ -160,18 +192,19 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-mustard-600 text-base font-medium text-white hover:bg-mustard-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mustard-500 sm:ml-3 sm:w-auto sm:text-sm">
                             {{ __('Delete') }}
                         </button>
                     </form>
                     <button type="button" onclick="closeDeleteModal()"
-                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        class="mt-3 w-full inline-flex justify-center rounded-md border border-maroon-200 shadow-sm px-4 py-2 bg-white text-base font-medium text-maroon-800 hover:bg-maroon-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-maroon-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                         {{ __('Cancel') }}
                     </button>
                 </div>
             </div>
         </div>
     </div>
+
 
     <script>
         // Modal functions

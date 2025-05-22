@@ -78,7 +78,7 @@ class AdminScheduleController extends Controller
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
         ]);
-        
+
 
         // Check for schedule conflicts (excluding current schedule)
         $conflict = Schedule::where('day', $request->day)

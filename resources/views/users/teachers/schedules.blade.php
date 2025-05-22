@@ -1,18 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-white leading-tight">
             {{ __('Teacher Schedule') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-maroon-200">
+                <div class="p-6 text-gray-900">
                     <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-lg font-medium">Your Teaching Schedule</h3>
+                        <h3 class="text-lg font-medium text-maroon-800">Your Teaching Schedule</h3>
                         <a href="{{ route('teacher.schedule.export') }}"
-                            class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
+                            class="px-4 py-2 bg-maroon-600 text-white rounded hover:bg-maroon-700 transition">
                             <i class="fa-solid fa-file-excel" aria-hidden="true"></i>
                             Export to Excel
                         </a>
@@ -21,33 +21,33 @@
                     <!-- Table View -->
                     <div class="mb-8">
                         <div class="overflow-x-auto">
-                            <table class="min-w-full bg-white dark:bg-gray-700 rounded-lg">
+                            <table class="min-w-full bg-white rounded-lg">
                                 <thead>
-                                    <tr class="bg-gray-100 dark:bg-gray-600">
-                                        <th class="py-3 px-4 text-left">Day</th>
-                                        <th class="py-3 px-4 text-left">Time</th>
-                                        <th class="py-3 px-4 text-left">Subject</th>
-                                        <th class="py-3 px-4 text-left">Section</th>
-                                        <th class="py-3 px-4 text-left">Room</th>
-                                        <th class="py-3 px-4 text-left">Students</th>
+                                    <tr class="bg-maroon-100">
+                                        <th class="py-3 px-4 text-left text-maroon-800">Day</th>
+                                        <th class="py-3 px-4 text-lef text-maroon-800t">Time</th>
+                                        <th class="py-3 px-4 text-left text-maroon-800">Subject</th>
+                                        <th class="py-3 px-4 text-left text-maroon-800">Section</th>
+                                        <th class="py-3 px-4 text-left text-maroon-800">Room</th>
+                                        <th class="py-3 px-4 text-left text-maroon-800">Students</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($schedules as $schedule)
-                                    <tr class="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <td class="py-3 px-4">{{ ucfirst($schedule->day) }}</td>
-                                        <td class="py-3 px-4">
+                                    <tr class="border-b border-maroon-100 hover:bg-maroon-50">
+                                        <td class="py-3 px-4 text-maroon-800">{{ ucfirst($schedule->day) }}</td>
+                                        <td class="py-3 px-4 text-maroon-800">
                                             {{ \Carbon\Carbon::parse($schedule->start_time)->format('h:i A') }} -
                                             {{ \Carbon\Carbon::parse($schedule->end_time)->format('h:i A') }}
                                         </td>
-                                        <td class="py-3 px-4">{{ $schedule->subject->subject_name ?? 'N/A' }}</td>
-                                        <td class="py-3 px-4">{{ $schedule->section->section_level ?? 'N/A' }}</td>
-                                        <td class="py-3 px-4">{{ $schedule->room->room_number ?? 'N/A' }}</td>
-                                        <td class="py-3 px-4">{{ $schedule->students->count() }}</td>
+                                        <td class="py-3 px-4 text-maroon-800">{{ $schedule->subject->subject_name ?? 'N/A' }}</td>
+                                        <td class="py-3 px-4 text-maroon-800">{{ $schedule->section->section_level ?? 'N/A' }}</td>
+                                        <td class="py-3 px-4 text-maroon-800">{{ $schedule->room->room_number ?? 'N/A' }}</td>
+                                        <td class="py-3 px-4 text-maroon-800">{{ $schedule->students->count() }}</td>
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="6" class="py-4 px-4 text-center">No teaching schedules found.</td>
+                                        <td colspan="6" class="py-4 px-4 text-center  text-maroon-600">No teaching schedules found.</td>
                                     </tr>
                                     @endforelse
                                 </tbody>
@@ -57,14 +57,14 @@
 
                     <!-- Spreadsheet-like View -->
                     <div class="mb-8">
-                        <h4 class="text-md font-medium mb-4">Weekly Schedule Overview</h4>
+                        <h4 class="text-md font-medium mb-4  text-maroon-800">Weekly Schedule Overview</h4>
                         <div class="overflow-x-auto">
-                            <table class="min-w-full bg-white dark:bg-gray-700 rounded-lg border-collapse">
+                            <table class="min-w-full bg-white rounded-lg border-collapse">
                                 <thead>
                                     <tr>
-                                        <th class="border border-gray-300 dark:border-gray-600 py-2 px-4">Time</th>
+                                        <th class="border border-maroon-200 py-2 px-4 bg-maroon-100 text-maroon-800">Time</th>
                                         @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
-                                        <th class="border border-gray-300 dark:border-gray-600 py-2 px-4">{{ $day }}</th>
+                                        <th class="border border-maroon-200 py-2 px-4 bg-maroon-100 text-maroon-800">{{ $day }}</th>
                                         @endforeach
                                     </tr>
                                 </thead>
@@ -82,7 +82,7 @@
 
                                         @foreach($timeSlots as $time)
                                         <tr>
-                                            <td class="border border-gray-300 dark:border-gray-600 py-2 px-4 text-sm">{{ $time }}</td>
+                                            <td class="border border-maroon-200 py-2 px-4 text-sm text-maroon-800">{{ $time }}</td>
                                             @foreach(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
                                             @php
                                             $hasClass = false;
@@ -102,10 +102,10 @@
                                             }
                                             }
                                             @endphp
-                                            <td class="border border-gray-300 dark:border-gray-600 py-2 px-4 text-sm 
-                                                    {{ $hasClass ? 'bg-green-100 dark:bg-green-800' : '' }}">
+                                            <td class="border border-maroon-200 py-2 px-4 text-sm 
+                                                    {{ $hasClass ? 'bg-mustard-100' : '' }}">
                                                 @if($hasClass)
-                                                <div class="text-xs">
+                                                <div class="text-xs text-maroon-800">
                                                     <div class="font-medium">{{ $classInfo->subject->subject_name ?? 'N/A' }}</div>
                                                     <div>{{ $classInfo->section->section_level ?? 'N/A' }}</div>
                                                     <div>{{ $classInfo->room->room_number ?? 'N/A' }}</div>

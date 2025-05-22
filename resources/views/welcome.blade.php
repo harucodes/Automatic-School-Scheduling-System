@@ -7,8 +7,11 @@
     <title>Automated Class Scheduling System</title>
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
+            --maroon: #9b1a1a;
+            --maroon-dark: #5e1010;
+            --maroon-light: #f5e8e8;
+            --mustard: #ffc438;
+            --mustard-dark: #e6b032;
             --bg: #f8fafc;
             --text: #334155;
             --text-light: #64748b;
@@ -22,12 +25,16 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
 
         @keyframes float {
@@ -59,18 +66,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(155, 26, 26, 0.9);
             backdrop-filter: blur(8px);
             position: sticky;
             top: 0;
             z-index: 10;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary);
+            color: white;
             letter-spacing: -0.5px;
             transition: transform 0.3s ease;
         }
@@ -86,24 +93,25 @@
 
         nav a {
             text-decoration: none;
-            color: var(--text-light);
+            color: white;
             font-weight: 500;
             transition: all 0.3s ease;
             position: relative;
+            padding: 0.5rem 0;
         }
 
         nav a:hover {
-            color: var(--primary);
+            color: var(--mustard);
         }
 
         nav a::after {
             content: '';
             position: absolute;
-            bottom: -4px;
+            bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
-            background-color: var(--primary);
+            background-color: var(--mustard);
             transition: width 0.3s ease;
         }
 
@@ -118,11 +126,18 @@
             justify-content: center;
             padding: 4rem 5%;
             text-align: center;
+            color: white;
         }
 
         .hero-content {
-            max-width: 700px;
+            max-width: 800px;
             animation: fadeIn 1s ease-out;
+            background-color: rgba(155, 26, 26, 0.85);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .hero h1 {
@@ -130,15 +145,13 @@
             margin-bottom: 1.5rem;
             font-weight: 800;
             line-height: 1.2;
-            background: linear-gradient(to right, var(--primary), #7c3aed);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .hero p {
             font-size: 1.25rem;
-            color: var(--text-light);
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 2.5rem;
             max-width: 600px;
             margin-left: auto;
@@ -147,15 +160,15 @@
 
         .cta {
             display: inline-block;
-            background: linear-gradient(to right, var(--primary), var(--primary-dark));
-            color: white;
+            background: linear-gradient(to right, var(--mustard), var(--mustard-dark));
+            color: var(--maroon-dark);
             padding: 0.9rem 2.25rem;
             border-radius: 50px;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 4px 15px rgba(255, 196, 56, 0.3);
             border: none;
             cursor: pointer;
             position: relative;
@@ -164,7 +177,8 @@
 
         .cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 6px 20px rgba(255, 196, 56, 0.4);
+            color: var(--maroon);
         }
 
         .cta:active {
@@ -178,7 +192,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: 0.5s;
         }
 
@@ -186,12 +200,44 @@
             left: 100%;
         }
 
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 3rem 5%;
+            flex-wrap: wrap;
+        }
+
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+            border-top: 4px solid var(--mustard);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-card h3 {
+            color: var(--maroon);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+        }
+
         footer {
             text-align: center;
             padding: 1.5rem;
             font-size: 0.9rem;
-            color: var(--text-light);
-            background-color: rgba(255, 255, 255, 0.8);
+            color: white;
+            background-color: rgba(155, 26, 26, 0.9);
             backdrop-filter: blur(8px);
         }
 
@@ -211,6 +257,15 @@
             .hero p {
                 font-size: 1.1rem;
             }
+
+            .hero-content {
+                padding: 2rem;
+            }
+
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
@@ -227,10 +282,25 @@
     <section class="hero">
         <div class="hero-content">
             <h1>Automated Class Scheduling System</h1>
-            <p>Intelligently plan and organize your academic schedule with our automated system. Eliminate conflicts and save time with smart scheduling.</p>
+            <p>Intelligently plan and organize your academic schedule with our automated system. Eliminate conflicts and save time with smart scheduling designed for educational excellence.</p>
             <a href="/register" class="cta">Get Started</a>
         </div>
     </section>
+
+    <div class="features">
+        <div class="feature-card">
+            <h3>Smart Scheduling</h3>
+            <p>Our algorithm automatically creates conflict-free schedules based on your preferences and constraints.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Real-time Updates</h3>
+            <p>Get instant notifications about schedule changes and room assignments.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Easy Management</h3>
+            <p>Simple interface for administrators to manage courses, rooms, and faculty assignments.</p>
+        </div>
+    </div>
 
     <footer>
         &copy; 2025 Automated Class Scheduling System. All rights reserved.

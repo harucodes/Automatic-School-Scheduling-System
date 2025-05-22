@@ -1,67 +1,119 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" class="space-y-4">
         @csrf
 
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <label for="name" class="block text-sm font-medium text-maroon-700">
+                {{ __('Name') }}
+            </label>
+            <input id="name"
+                class="mt-1 block w-full rounded-md border-maroon-200 shadow-sm focus:border-mustard-500 focus:ring-mustard-500"
+                type="text"
+                name="name"
+                value="{{ old('name') }}"
+                required
+                autofocus
+                autocomplete="name">
+            @error('name')
+            <p class="mt-2 text-sm text-maroon-600">{{ $message }}</p>
+            @enderror
         </div>
-        <div class="mt-4">
-            <x-input-label for="id_number" :value="__('ID Number')" />
-            <x-text-input id="id_number" class="block mt-1 w-full" type="text" name="id_number" :value="old('id_number')" required autocomplete="id_number" />
-            <x-input-error :messages="$errors->get('id_number')" class="mt-2" />
+
+        <!-- ID Number -->
+        <div>
+            <label for="id_number" class="block text-sm font-medium text-maroon-700">
+                {{ __('ID Number') }}
+            </label>
+            <input id="id_number"
+                class="mt-1 block w-full rounded-md border-maroon-200 shadow-sm focus:border-mustard-500 focus:ring-mustard-500"
+                type="text"
+                name="id_number"
+                value="{{ old('id_number') }}"
+                required
+                autocomplete="id_number">
+            @error('id_number')
+            <p class="mt-2 text-sm text-maroon-600">{{ $message }}</p>
+            @enderror
         </div>
+
         <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div>
+            <label for="email" class="block text-sm font-medium text-maroon-700">
+                {{ __('Email') }}
+            </label>
+            <input id="email"
+                class="mt-1 block w-full rounded-md border-maroon-200 shadow-sm focus:border-mustard-500 focus:ring-mustard-500"
+                type="email"
+                name="email"
+                value="{{ old('email') }}"
+                required
+                autocomplete="username">
+            @error('email')
+            <p class="mt-2 text-sm text-maroon-600">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Role Select -->
-        <div class="mt-4">
-            <x-input-label for="role" :value="__('Register as')" />
-            <select id="role" name="role" required class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+        <div>
+            <label for="role" class="block text-sm font-medium text-maroon-700">
+                {{ __('Register as') }}
+            </label>
+            <select id="role"
+                name="role"
+                required
+                class="mt-1 block w-full rounded-md border-maroon-200 shadow-sm focus:border-mustard-500 focus:ring-mustard-500">
                 <option value="" disabled selected>-- Select Role --</option>
                 <option value="teacher" {{ old('role') == 'teacher' ? 'selected' : '' }}>Teacher</option>
                 <option value="student" {{ old('role') == 'student' ? 'selected' : '' }}>Student</option>
             </select>
-            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+            @error('role')
+            <p class="mt-2 text-sm text-maroon-600">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
+        <div>
+            <label for="password" class="block text-sm font-medium text-maroon-700">
+                {{ __('Password') }}
+            </label>
+            <input id="password"
+                class="mt-1 block w-full rounded-md border-maroon-200 shadow-sm focus:border-mustard-500 focus:ring-mustard-500"
                 type="password"
                 name="password"
-                required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                required
+                autocomplete="new-password">
+            @error('password')
+            <p class="mt-2 text-sm text-maroon-600">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
+        <div>
+            <label for="password_confirmation" class="block text-sm font-medium text-maroon-700">
+                {{ __('Confirm Password') }}
+            </label>
+            <input id="password_confirmation"
+                class="mt-1 block w-full rounded-md border-maroon-200 shadow-sm focus:border-mustard-500 focus:ring-mustard-500"
                 type="password"
-                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                name="password_confirmation"
+                required
+                autocomplete="new-password">
+            @error('password_confirmation')
+            <p class="mt-2 text-sm text-maroon-600">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
+        <div class="flex items-center justify-between mt-6">
+            <a class="text-sm text-maroon-600 hover:text-mustard-700 underline"
+                href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
 
-            <x-primary-button class="ms-4">
+            <button type="submit"
+                class="inline-flex items-center px-4 py-2 bg-maroon-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-maroon-700 focus:bg-maroon-700 active:bg-maroon-800 focus:outline-none focus:ring-2 focus:ring-mustard-500 focus:ring-offset-2 transition ease-in-out duration-150">
                 {{ __('Register') }}
-            </x-primary-button>
+            </button>
         </div>
     </form>
 </x-guest-layout>

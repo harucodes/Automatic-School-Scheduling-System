@@ -20,15 +20,45 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        .bg-maroon {
+            background-color: #9b1a1a;
+        }
+
+        .bg-maroon-100 {
+            background-color: #f5e8e8;
+        }
+
+        .bg-mustard-100 {
+            background-color: #fff9eb;
+        }
+
+        .text-maroon-600 {
+            color: #9b1a1a;
+        }
+
+        .text-maroon-800 {
+            color: #5e1010;
+        }
+
+        .text-mustard-600 {
+            color: #ffc438;
+        }
+
+        .border-maroon-200 {
+            border-color: #e6c6c6;
+        }
+    </style>
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div class="min-h-screen bg-gray-50">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
         @isset($header)
-        <header class="bg-white dark:bg-gray-800 shadow">
+        <header class="bg-maroon shadow">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 {{ $header }}
             </div>
