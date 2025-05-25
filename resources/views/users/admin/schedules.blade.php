@@ -22,7 +22,8 @@
                 </div>
                 @endif
 
-                <!-- Calendar Navigation -->
+                <!--
+                 Calendar Navigation
                 <div class="flex justify-between items-center mb-4">
                     <button id="prevMonth" class="px-3 py-1 rounded-md bg-maroon-100 hover:bg-maroon-200 text-maroon-800">
                         &lt; Previous
@@ -32,6 +33,7 @@
                         Next &gt;
                     </button>
                 </div>
+                -->
 
                 <!-- Create Schedule Button -->
                 <div class="flex justify-end mb-6">
