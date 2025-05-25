@@ -22,18 +22,16 @@
                 </div>
                 @endif
 
-                <!--
-                 Calendar Navigation
+                <!-- Calendar Navigation -->
                 <div class="flex justify-between items-center mb-4">
-                    <button id="prevMonth" class="px-3 py-1 rounded-md bg-maroon-100 hover:bg-maroon-200 text-maroon-800">
+                    <button id="prevMonth" class="px-3 py-1 rounded-md bg-maroon-100 hover:bg-maroon-200 text-maroon-800 hidden">
                         &lt; Previous
                     </button>
                     <h2 id="currentMonth" class="text-xl font-semibold text-maroon-800"></h2>
-                    <button id="nextMonth" class="px-3 py-1 rounded-md bg-maroon-100 hover:bg-maroon-200 text-maroon-800">
+                    <button id="nextMonth" class="px-3 py-1 rounded-md bg-maroon-100 hover:bg-maroon-200 text-maroon-800 hidden">
                         Next &gt;
                     </button>
                 </div>
-                -->
 
                 <!-- Create Schedule Button -->
                 <div class="flex justify-end mb-6">
@@ -314,55 +312,41 @@
             const monthNames = ["January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"
             ];
-            monthYearEl.textContent = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+            monthYearEl.textContent = `Year ${currentDate.getFullYear()}`;
 
-            // Get first day of month and total days in month
-            const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
-            const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+            // Days of the week
+            const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-            // Add empty cells for days before the first day of the month
-            for (let i = 0; i < firstDay; i++) {
-                const emptyDay = document.createElement('div');
-                emptyDay.className = 'h-24 p-1 border border-maroon-200';
-                calendarEl.appendChild(emptyDay);
-            }
-
-            // Add days of the month
-            for (let day = 1; day <= daysInMonth; day++) {
+            // Create exactly 7 boxes for each day of the week
+            daysOfWeek.forEach(dayName => {
                 const dayEl = document.createElement('div');
-                dayEl.className = 'h-24 p-1 border border-maroon-200  overflow-y-auto';
+                dayEl.className = 'min-h-24 p-1 border border-maroon-200 overflow-y-auto';
 
-                const dayHeader = document.createElement('div');
-                dayHeader.className = 'text-right font-semibold';
-                dayHeader.textContent = day;
-                dayEl.appendChild(dayHeader);
+                // Find schedules for this day, sorted by start_time
+                const daySchedules = schedules
+                    .filter(schedule => schedule.day === dayName)
+                    .sort((a, b) => new Date(`1970-01-01T${a.start_time}`) - new Date(`1970-01-01T${b.start_time}`));
 
-                // Find schedules for this day
-                const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][
-                    new Date(currentDate.getFullYear(), currentDate.getMonth(), day).getDay()
-                ];
-
-                const daySchedules = schedules.filter(schedule => schedule.day === dayName);
-
-                // Add schedule indicators
+                // Add schedule indicators sorted by start_time
                 daySchedules.forEach(schedule => {
                     const scheduleEl = document.createElement('div');
-                    scheduleEl.className = 'text-xs p-1 mb-1 rounded bg-mustard-600 text-maroon-800 cursor-pointer hover:bg-maroon-200 ';
+                    scheduleEl.className = 'text-xs p-1 mb-1 rounded bg-mustard-600 text-maroon-800 cursor-pointer hover:bg-maroon-200';
                     scheduleEl.textContent = `${schedule.subject.subject_name} (${formatTime(schedule.start_time)}-${formatTime(schedule.end_time)})`;
                     scheduleEl.addEventListener('click', () => openDayModal(dayName, daySchedules));
                     dayEl.appendChild(scheduleEl);
                 });
 
-                // Add click event to open day modal
+                // Add click event to open day modal when clicking empty space or day box
                 dayEl.addEventListener('click', function(e) {
-                    if (e.target === dayHeader || e.target === dayEl) {
+                    if (e.target === dayEl) {
                         openDayModal(dayName, daySchedules);
                     }
                 });
 
                 calendarEl.appendChild(dayEl);
-            }
+            });
         }
+
 
         // Format time to 12-hour format
         function formatTime(timeString) {
@@ -380,28 +364,44 @@
             if (schedules.length === 0) {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td colspan="6" class="px-6 py-4 text-center text-sm text-maroon-800 ">
+                    <td colspan="6" class="px-6 py-4 text-center text-sm text-maroon-800">
                         No schedules for this day
                     </td>
                 `;
                 bodyEl.appendChild(row);
             } else {
-                schedules.forEach(schedule => {
+                schedules.forEach((schedule, i) => {
+                    const isConflict = schedules.some((other, j) => {
+                        if (i === j) return false;
+
+                        const sameDay = true; // already filtered by day
+                        const overlap = conflictValidator(schedule.start_time, schedule.end_time, other.start_time, other.end_time);
+                        const sameRoom = schedule.room?.id === other.room?.id;
+                        const sameTeacher = schedule.teacher?.id === other.teacher?.id;
+                        const sameSection = schedule.section?.id === other.section?.id;
+
+                        return sameDay && overlap && (sameRoom || sameTeacher || sameSection);
+                    });
+
                     const row = document.createElement('tr');
+                    if (isConflict) {
+                        row.classList.add('conflict-bg');
+                    }
+
                     row.innerHTML = `
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-maroon-800 ">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-maroon-800">
                             ${formatTime(schedule.start_time)} - ${formatTime(schedule.end_time)}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-maroon-800 ">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-maroon-800">
                             ${schedule.subject.subject_name}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-maroon-800 ">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-maroon-800">
                             ${schedule.teacher.name}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-maroon-800 ">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-maroon-800">
                             ${schedule.section.section_name}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-maroon-800 ">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-maroon-800">
                             ${schedule.room.room_number}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -418,6 +418,16 @@
             }
 
             document.getElementById('dayModal').classList.remove('hidden');
+        }
+
+        // Helper to check if two time ranges overlap
+        function conflictValidator(startA, endA, startB, endB) {
+            const sA = new Date(`1970-01-01T${startA}`);
+            const eA = new Date(`1970-01-01T${endA}`);
+            const sB = new Date(`1970-01-01T${startB}`);
+            const eB = new Date(`1970-01-01T${endB}`);
+
+            return sA < eB && sB < eA;
         }
 
         function closeDayModal() {

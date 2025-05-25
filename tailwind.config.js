@@ -16,6 +16,7 @@ export default {
             },
             colors: {
                 maroon: {
+                    50: "#ffeeee",
                     100: "#f3dede",
                     200: "#e0bdbd",
                     600: "#9b1a1a",

@@ -22,6 +22,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
+        .conflict-bg td{
+            background-color: #ffdede;
+        }
+
         .bg-maroon {
             background-color: #9b1a1a;
         }

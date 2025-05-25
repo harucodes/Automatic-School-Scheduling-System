@@ -14,6 +14,7 @@
             extend: {
                 colors: {
                     maroon: {
+                        50: "#ffeeee",
                         100: "#f3dede",
                         200: "#e0bdbd",
                         600: "#9b1a1a",
@@ -31,7 +32,7 @@
 
 <body>
 
-    <div class="min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')">
+    <div class="min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('/assets/img/dhvsu_img.png')">
         <div class="max-w-md w-full mx-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden border border-maroon-200">
             <div class="p-8">
                 <!-- Logo/School Name -->
