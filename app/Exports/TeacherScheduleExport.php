@@ -70,7 +70,7 @@ class TeacherScheduleExport implements FromCollection, WithHeadings, WithMapping
 
         // Title row
         $sheet->mergeCells('A1:F1');
-        $sheet->setCellValue('A1', 'STUDENT SCHEDULE: ' . strtoupper($this->studentName));
+        $sheet->setCellValue('A1', 'TEACHER SCHEDULE: ' . strtoupper($this->teacherName));
         $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(16);
         $sheet->getStyle('A1')->getAlignment()->setHorizontal('center');
         $sheet->getRowDimension(1)->setRowHeight(25);
