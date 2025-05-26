@@ -25,7 +25,7 @@
                                 <thead>
                                     <tr class="bg-maroon-100">
                                         <th class="py-3 px-4 text-left text-maroon-800">Day</th>
-                                        <th class="py-3 px-4 text-lef text-maroon-800t">Time</th>
+                                        <th class="py-3 px-4 text-left text-maroon-800t">Time</th>
                                         <th class="py-3 px-4 text-left text-maroon-800">Subject</th>
                                         <th class="py-3 px-4 text-left text-maroon-800">Section</th>
                                         <th class="py-3 px-4 text-left text-maroon-800">Room</th>
