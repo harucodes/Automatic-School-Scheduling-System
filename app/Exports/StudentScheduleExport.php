@@ -114,11 +114,18 @@ class StudentScheduleExport implements FromCollection, WithHeadings, WithMapping
 
         // Add checkbox at A9 with label "CLASS PROGRAM" at B9
         // Simulate checkbox with Unicode empty checkbox symbol in A9
-        $sheet->setCellValue('A9', '☐');
-        $sheet->getStyle('A9')->getFont()->setSize(14);
-        $sheet->getStyle('A9')->getAlignment()->setHorizontal('center');
-        $sheet->setCellValue('B9', 'CLASS PROGRAM');
-        $sheet->getStyle('B9')->getFont()->setBold(true);
+        $sheet->setCellValue('A9', '☐ CLASS PROGRAM');
+        $sheet->getStyle('A9')->getFont()->setBold(true);
+        $sheet->getRowDimension(9)->setRowHeight(20);
+
+        // Add checkbox at C9 with label "ROOM PROGRAM" at B9
+        $sheet->setCellValue('C9', '☐ ROOM PROGRAM');
+        $sheet->getStyle('C9')->getFont()->setBold(true);
+        $sheet->getRowDimension(9)->setRowHeight(20);
+
+        // Add checkbox at E9 with label "INSTRUCTORS PROGRAM" at B9
+        $sheet->setCellValue('E9', '☐ INSTRUCTORS PROGRAM');
+        $sheet->getStyle('E9')->getFont()->setBold(true);
         $sheet->getRowDimension(9)->setRowHeight(20);
 
 
@@ -220,12 +227,12 @@ class StudentScheduleExport implements FromCollection, WithHeadings, WithMapping
         $sheet->getStyle("A15:F{$lastRow}")->getAlignment()->setVertical('center');
 
         // Set column widths
-        $sheet->getColumnDimension('A')->setWidth(20); // Time
-        $sheet->getColumnDimension('B')->setWidth(25); // Teacher
-        $sheet->getColumnDimension('C')->setWidth(15); // Day
-        $sheet->getColumnDimension('D')->setWidth(30); // Subject
-        $sheet->getColumnDimension('E')->setWidth(15); // Section
-        $sheet->getColumnDimension('F')->setWidth(15); // Room
+        $sheet->getColumnDimension('A')->setWidth(18); // Time
+        $sheet->getColumnDimension('B')->setWidth(18); // Teacher
+        $sheet->getColumnDimension('C')->setWidth(18); // Day
+        $sheet->getColumnDimension('D')->setWidth(18); // Subject
+        $sheet->getColumnDimension('E')->setWidth(18); // Section
+        $sheet->getColumnDimension('F')->setWidth(18); // Room
 
         // ----- Footer section (Row 42 and below) -----
         // Prepared by
@@ -306,7 +313,7 @@ class StudentScheduleExport implements FromCollection, WithHeadings, WithMapping
 
 
         // Approved block starting at row 60
-        $sheet->mergeCells('B60:D60');
+        $sheet->mergeCells('B60:E60');
         $sheet->setCellValue('B60', 'Approved');
         $sheet->getStyle('B60')->getFont()->setBold(false);
         $sheet->getStyle('B60')->getAlignment()->setHorizontal('center')->setVertical('center');
