@@ -44,7 +44,6 @@
                         <p class="text-maroon-600">Automated Scheduling System</p>
                     </div>
                 </div>
-
                 <!-- Session Status -->
                 @if (session('status'))
                 <div class="mb-6 p-4 bg-mustard-100 text-maroon-800 rounded-lg border border-mustard-200">
@@ -149,6 +148,7 @@
                 @endif
             </div>
         </div>
+        <div id="blurryy">OK</div>
     </div>
 
 </body>

@@ -312,7 +312,7 @@
             const monthNames = ["January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"
             ];
-            monthYearEl.textContent = `Year ${currentDate.getFullYear()}`;
+            //monthYearEl.textContent = `Year ${currentDate.getFullYear()}`;
 
             // Days of the week
             const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

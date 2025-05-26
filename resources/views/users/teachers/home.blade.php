@@ -103,6 +103,12 @@
     </div>
 
     <style>
+        #blurryy {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            background: red;
+        }
         .animate-fade-in {
             animation: fadeIn 1s ease-out;
         }
