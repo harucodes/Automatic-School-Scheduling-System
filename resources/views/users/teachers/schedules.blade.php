@@ -29,7 +29,7 @@
                                         <th class="py-3 px-4 text-left text-maroon-800">Subject</th>
                                         <th class="py-3 px-4 text-left text-maroon-800">Section</th>
                                         <th class="py-3 px-4 text-left text-maroon-800">Room</th>
-                                        <th class="py-3 px-4 text-left text-maroon-800">Students</th>
+                                        <!--<th class="py-3 px-4 text-left text-maroon-800">Students</th>-->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -43,7 +43,7 @@
                                         <td class="py-3 px-4 text-maroon-800">{{ $schedule->subject->subject_name ?? 'N/A' }}</td>
                                         <td class="py-3 px-4 text-maroon-800">{{ $schedule->section->section_level ?? 'N/A' }}</td>
                                         <td class="py-3 px-4 text-maroon-800">{{ $schedule->room->room_number ?? 'N/A' }}</td>
-                                        <td class="py-3 px-4 text-maroon-800">{{ $schedule->students->count() }}</td>
+                                        <!--<td class="py-3 px-4 text-maroon-800">{{ $schedule->students->count() }}</td>-->
                                     </tr>
                                     @empty
                                     <tr>
